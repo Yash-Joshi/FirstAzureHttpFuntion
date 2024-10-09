@@ -17,9 +17,20 @@ namespace My.Function
         [Function("HttpExample")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
         {
-            var test  = 
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
-            return new OkObjectResult("Welcome to Azure Functions!");
+            var test  = req.Headers.UserAgent;
+            if(test.Contains("Safari"))
+            {
+                _logger.LogInformation("Its a mac browser");
+                return new OkObjectResult("Download for mac os");
+            }
+            else 
+            {
+                 _logger.LogInformation("Its not a mac browser");
+                return new OkObjectResult("Download for other os");
+
+             //_logger.LogInformation("C# HTTP trigger function processed a request.");
+            //return new OkObjectResult("Welcome to Azure Functions!");
+            }
         }
     }
 }
